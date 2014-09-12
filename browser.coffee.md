@@ -38,7 +38,7 @@ Now we need to createsvg circles to represent our agents and bind them to the ac
 				.enter().append "circle"
 				.style "fill", (d) -> d.strategy.color 
 				.style "opacity", 0.5
-				.attr "r", 8
+				.attr "r", (d) -> (d.score / 10) #8
 				.attr "cx", (d) -> d.x
 				.attr "cy", (d) -> d.y
 
@@ -58,7 +58,7 @@ We then write a loop where each svg circle triggers the move function for its bo
 			.duration 600
 			.attr "cx", (d) -> d.x
 			.attr "cy", (d) -> d.y
-			.attr "r", (d) -> 8
+			.attr "r", (d) -> (d.score / 10) #8
 			.attr "title", (d) -> "#{d.strategy.name} - #{d.score}"
 			.style "fill", (d) -> d.strategy.color
 		

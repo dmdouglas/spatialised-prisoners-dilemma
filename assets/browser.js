@@ -30,7 +30,9 @@ info = d3.select("#info").on("click", function() {
 populate = function() {
   return canvas.selectAll("circle").data(simulation.agents(height, width)).enter().append("circle").style("fill", function(d) {
     return d.strategy.color;
-  }).style("opacity", 0.5).attr("r", 8).attr("cx", function(d) {
+  }).style("opacity", 0.5).attr("r", function(d) {
+    return d.score / 10;
+  }).attr("cx", function(d) {
     return d.x;
   }).attr("cy", function(d) {
     return d.y;
@@ -51,7 +53,7 @@ move = function() {
   }).attr("cy", function(d) {
     return d.y;
   }).attr("r", function(d) {
-    return 8;
+    return d.score / 10;
   }).attr("title", function(d) {
     return "" + d.strategy.name + " - " + d.score;
   }).style("fill", function(d) {
@@ -252,7 +254,7 @@ contest = function(agent) {
     neighbour = neighbours[_i];
     for (round = _j = 0; 0 <= rounds ? _j <= rounds : _j >= rounds; round = 0 <= rounds ? ++_j : --_j) {
       last_game = [agent.play(neighbour, last_game), neighbour.play(agent, last_game)];
-      scores = snow_drift(last_game);
+      scores = prisoners_dilemma(last_game);
       agent.score += scores[0];
     }
   }
